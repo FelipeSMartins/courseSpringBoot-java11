@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_user")
 public class User implements Serializable {
@@ -25,7 +27,12 @@ public class User implements Serializable {
 	private String password;
 
 	/* Em caso de coleção colocamos apenas o GET e nunca o SET 
-	 * mappedby para mapear o atributo do outro lado*/
+	 * mappedby para mapear o atributo do outro lado
+	 * @jsonignore para evitar o loop referente ao relacionamento de mão dupla
+	 * application-properties - spring.jpa.open.in.view=true junto ao @jsonignore permite
+	 * a visualização dos relacionamentos junto a chamada*/
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 
