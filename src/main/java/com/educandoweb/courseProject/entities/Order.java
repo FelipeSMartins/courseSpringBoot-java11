@@ -26,7 +26,7 @@ public class Order implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 
-	private OrderStatus orderStatus;
+	private Integer orderStatus;
 
 	/* manytoone = muitas ordens para um usuário */
 	@ManyToOne
@@ -42,15 +42,15 @@ public class Order implements Serializable {
 		this.id = id;
 		this.moment = moment;
 		this.client = client;
-		this.orderStatus = orderStatus;
+		setOrderStatus(orderStatus);
 	}
 
 	public OrderStatus getOrderStatus() {
-		return orderStatus;
+		return OrderStatus.valueOf(orderStatus);
 	}
 
 	public void setOrderStatus(OrderStatus orderStatus) {
-		this.orderStatus = orderStatus;
+		this.orderStatus = orderStatus.getCode();
 	}
 
 	public Long getId() {
